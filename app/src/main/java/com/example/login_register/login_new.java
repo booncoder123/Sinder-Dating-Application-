@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class login_new extends AppCompatActivity {
     EditText mEmail,mPassword;
@@ -24,6 +25,9 @@ public class login_new extends AppCompatActivity {
     TextView mCreateBtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
+    FirebaseUser firebaseUser;
+
+
 
 
 
@@ -36,14 +40,20 @@ public class login_new extends AppCompatActivity {
         mPassword = findViewById(R.id.Password);
         progressBar = findViewById(R.id.progressBar2);
         fAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        //checking for users exist
+        if(firebaseUser != null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
+            finish();
+        }
+
+
         mLoginBtn = findViewById(R.id.login_button);
         mCreateBtn = findViewById(R.id.create_text);
 
 
-        if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
-            finish();
-        }
+
 
 
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +100,7 @@ public class login_new extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),register.class));
-                startActivity(new Intent(getApplicationContext(),register.class));
+
 
             }
         });

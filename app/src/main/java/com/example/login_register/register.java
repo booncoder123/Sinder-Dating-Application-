@@ -20,6 +20,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,9 +32,12 @@ public class register extends AppCompatActivity {
     EditText mFullName,mEmail,mPassword,mPhone;
     Button mRegisterBtn;
     TextView mLoginBtn;
+
     FirebaseAuth fAuth;
+    DatabaseReference myRef;
+
     ProgressBar progressBar;
-    FirebaseFirestore fStore;
+//    FirebaseFirestore fStore;
     String userID;
 
 
@@ -45,13 +50,14 @@ public class register extends AppCompatActivity {
                 {
                     Toast.makeText(register.this,"User Created",Toast.LENGTH_SHORT).show();
                     userID = fAuth.getCurrentUser().getUid(); // getting id
-                    DocumentReference documentReference = fStore.collection("users").document(userID); // get into firestore of userid
+                    myRef = FirebaseDatabase.getInstance().getReference("MyUsers").child(userID);
+
                     Map<String,Object> user = new HashMap<>();
                     user.put("fName",name);
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
-                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    myRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Log.d("value","OnSuccess: user Profile is created for "+ userID);
@@ -95,7 +101,7 @@ public class register extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
 
         fAuth = FirebaseAuth.getInstance();
-        fStore = FirebaseFirestore.getInstance();
+//        fStore = FirebaseFirestore.getInstance();
 
          //check if it alreadys id there
         if(fAuth.getCurrentUser() != null){
