@@ -40,6 +40,12 @@ public class login_new extends AppCompatActivity {
         mCreateBtn = findViewById(R.id.create_text);
 
 
+        if(fAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
+            finish();
+        }
+
+
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
