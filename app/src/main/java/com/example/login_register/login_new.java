@@ -90,6 +90,8 @@ public class login_new extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),register.class));
+                startActivity(new Intent(getApplicationContext(),register.class));
+
             }
         });
 
