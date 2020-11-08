@@ -26,7 +26,16 @@ public class login_new extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     FirebaseUser firebaseUser;
+protected void onStart(){
+    super.onStart();
+    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    //checking for users exist
+    if(firebaseUser != null){
+        startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
+        finish();
+    }
+}
 
 
 
@@ -40,13 +49,7 @@ public class login_new extends AppCompatActivity {
         mPassword = findViewById(R.id.Password);
         progressBar = findViewById(R.id.progressBar2);
         fAuth = FirebaseAuth.getInstance();
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        //checking for users exist
-        if(firebaseUser != null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
-            finish();
-        }
 
 
         mLoginBtn = findViewById(R.id.login_button);
