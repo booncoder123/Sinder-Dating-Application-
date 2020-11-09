@@ -1,8 +1,14 @@
 package com.example.login_register;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,9 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TableLayout;
 
 
+import com.example.login_register.Model.TabsAccessorAdapter;
 import com.example.login_register.Model.Users;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,17 +32,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     //Firebase
     FirebaseUser firebaseUser;
     DatabaseReference myRef;
     Button mLoginBtn;
 
-//    public void logout(View view) {
-//        FirebaseAuth.getInstance().signOut();
-//        startActivity(new Intent(getApplicationContext(), login_new.class));
-//        finish();
-//    }
+//    private  Toolbar mToolbar;
+
+    private ViewPager2 myViewPager;
+    private TabLayout mytableLayout;
+    private TabsAccessorAdapter mytabsAccessorAdapter;
 
 
     @Override
@@ -41,47 +53,60 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        mLoginBtn = findViewById(R.id.button);
+//        mLoginBtn = findViewById(R.id.button);
 
-//
-        mLoginBtn.setOnClickListener(new View.OnClickListener() {
+        myViewPager = (ViewPager2) findViewById(R.id.tabpager);
+        myViewPager.setAdapter(new TabsAccessorAdapter(this));
+
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        TabLayoutMediator tabLayoutMediator = new TabLayoutMediator(tabLayout, myViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), login_new.class));
-                finish();
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+            switch (position){
+                case 0:{
+                    tab.setText("Pending");
+                    tab.setIcon(R.drawable.ic_pending);
+                    break;
+
+                }
+                case 1:{
+                    tab.setText("Confirm");
+                    tab.setIcon(R.drawable.ic_confirm);
+                    break;
+
+                }
+                case 2:{
+                    tab.setText("Sending");
+                    tab.setIcon(R.drawable.ic_del);
+                    break;
+
+                }
+            }
             }
         });
+        tabLayoutMediator.attach();
 
 
 
 
 
-//        myRef.addValueEventListener(new ValueEventListener() {
+
+
+
+
+
+//
+//        mLoginBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                Users users = snapshot.getValue(Users.class);
-//
-//
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                startActivity(new Intent(getApplicationContext(), login_new.class));
+//                finish();
 //            }
 //        });
 
-
-        //send to register act
-//        Intent intent = new Intent(this,register.class);
-//        startActivity(intent);
     }
-
-
-
-
-
+    //Tab layout and Viewpager
 
 }
+
