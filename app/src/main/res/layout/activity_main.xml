@@ -11,16 +11,15 @@
     android:layout_height="3dp"
     android:background="@color/green"></View>
 
- <com.google.android.material.tabs.TabLayout
-     android:id="@+id/tabLayout"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     app:tabPaddingTop="15dp"
-     app:tabPaddingBottom="8dp"
-     android:background="@color/teal_200"
-     app:tabIndicatorHeight="3dp"
-     app:tabMode="fixed"
-     ></com.google.android.material.tabs.TabLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:background="@color/teal_200"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabPaddingBottom="8dp"
+        app:tabPaddingTop="15dp"></com.google.android.material.tabs.TabLayout>
 
 
     <androidx.viewpager2.widget.ViewPager2
