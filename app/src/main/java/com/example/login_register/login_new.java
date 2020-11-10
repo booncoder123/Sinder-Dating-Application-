@@ -25,17 +25,17 @@ public class login_new extends AppCompatActivity {
     TextView mCreateBtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
-    FirebaseUser firebaseUser;
-protected void onStart(){
-    super.onStart();
-    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-    //checking for users exist
-    if(firebaseUser != null){
-        startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
-        finish();
-    }
-}
+//    FirebaseUser firebaseUser;
+//protected void onStart(){
+//    super.onStart();
+//    firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+//
+//    //checking for users exist
+//    if(firebaseUser != null){
+//        startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
+//        finish();
+//    }
+//}
 
 
 

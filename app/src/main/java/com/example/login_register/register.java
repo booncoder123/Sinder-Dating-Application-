@@ -57,6 +57,8 @@ public class register extends AppCompatActivity {
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
+
+
                     myRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {

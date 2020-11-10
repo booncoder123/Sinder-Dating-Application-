@@ -11,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".FindActivity2" android:parentActivityName=".MainActivity"></activity>
+        <activity android:name=".SettingsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".login_new" />
         <activity android:name=".register">

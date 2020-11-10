@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 
 import com.example.login_register.Model.TabsAccessorAdapter;
@@ -56,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        myRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+        myRef = FirebaseDatabase.getInstance().getReference();
+
 //        mLoginBtn = findViewById(R.id.button);
 
         myViewPager = (ViewPager2) findViewById(R.id.tabpager);
@@ -121,6 +123,37 @@ public class MainActivity extends AppCompatActivity {
         if(firebaseUser == null){
             SendUserToLoginActivity();
         }
+        else{
+            VerifyUserExistance();
+
+        }
+    }
+
+    private void VerifyUserExistance() {
+        String currentUserID = mAuth.getCurrentUser().getUid();
+        myRef.child(currentUserID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("sex").exists()){
+
+                }
+                else {
+                    SendUserToSettingActivity();
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -131,12 +164,19 @@ public class MainActivity extends AppCompatActivity {
 
         }
         if (item.getItemId() == R.id.menu_find_friend) {
-
+            SendUsertoFindFriendAct();
         }
         if (item.getItemId() == R.id.menu_settings) {
+            SendUserToSettingActivity();
 
         }
         return true;
+
+    }
+
+    private void SendUsertoFindFriendAct() {
+        Intent FindFriendIntent = new Intent(MainActivity.this,FindActivity2.class);
+        startActivity(FindFriendIntent);
 
     }
 
@@ -144,6 +184,12 @@ public class MainActivity extends AppCompatActivity {
         Intent loginIntent = new Intent(MainActivity.this,login_new.class);
         startActivity(loginIntent);
     }
+    private void SendUserToSettingActivity() {
+        Intent SettingActivity = new Intent(MainActivity.this,SettingsActivity.class);
+        startActivity(SettingActivity);
+    }
+
+
 
 
 }
