@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/input"
+
     >
     <TextView
         android:id="@+id/textviewid"
@@ -21,6 +21,13 @@
         android:textStyle="bold"
         android:textSize="30dp"></TextView>
 
+    <Button
+        android:id="@+id/add_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD"
+        android:textSize="30dp"
+        android:background="@drawable/input"/>
 
 
 </LinearLayout>
