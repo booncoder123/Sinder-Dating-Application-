@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
             SendUserToLoginActivity();
         }
         else{
-            VerifyUserExistance();
+//            VerifyUserExistance();
 
         }
     }
@@ -187,6 +187,11 @@ public class MainActivity extends AppCompatActivity {
     private void SendUserToSettingActivity() {
         Intent SettingActivity = new Intent(MainActivity.this,SettingsActivity.class);
         startActivity(SettingActivity);
+    }
+
+    private void SendUserToFindActivity() {
+        Intent FindActivity = new Intent(MainActivity.this,FindActivity2.class);
+        startActivity(FindActivity);
     }
 
 
