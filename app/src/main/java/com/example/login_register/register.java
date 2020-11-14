@@ -50,13 +50,15 @@ public class register extends AppCompatActivity {
                 {
                     Toast.makeText(register.this,"User Created",Toast.LENGTH_SHORT).show();
                     userID = fAuth.getCurrentUser().getUid(); // getting id
-                    myRef = FirebaseDatabase.getInstance().getReference("MyUsers").child(userID);
+                    myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID);
 
                     Map<String,Object> user = new HashMap<>();
                     user.put("fName",name);
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
+                    user.put("Friends","default");
+                    user.put("Strangers","default");
 
 
                     myRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -75,6 +77,10 @@ public class register extends AppCompatActivity {
                             Log.d("value","OnFailure:  "+ e.toString());
                         }
                     });
+                    initialize_node();
+
+
+
 
 
                 }
@@ -87,6 +93,19 @@ public class register extends AppCompatActivity {
         });
 
     }
+
+    private void initialize_node() {
+        userID = fAuth.getCurrentUser().getUid(); // getting id
+        myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID).child("Friends");
+        Map<String,Object> user2 = new HashMap<>();
+        user2.put("Person1","default");
+        myRef.setValue(user2);
+        myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID).child("Strangers");
+        Map<String,Object> user3 = new HashMap<>();
+        user3.put("Person1","default");
+        myRef.setValue(user3);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

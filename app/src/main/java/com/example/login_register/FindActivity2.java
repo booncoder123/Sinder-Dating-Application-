@@ -14,33 +14,88 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.login_register.Model.MyAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+
+
+
+
 
 public class FindActivity2 extends AppCompatActivity {
 
 
     private RecyclerView FindFriendRecycleList;
-    private DatabaseReference UserRef;
+
+    FirebaseAuth fAuth;
+    DatabaseReference myRef;
+    String userID;
+    ArrayList<String> Stranger_List = new ArrayList<String>();
+    ArrayList<String> Stranger_name ;
+    String a;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find2);
-        UserRef = FirebaseDatabase.getInstance().getReference().child("MyUsers");
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        fAuth = FirebaseAuth.getInstance();
+        myRef  = FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers");
+        Stranger_name = new ArrayList<String>();
+        Stranger_List = new ArrayList<String>();
+
+
+//push data from Strangers node of this.person.id
+
+        myRef.addValueEventListener(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dsp : snapshot.getChildren()) {
 
 
 
-        FindFriendRecycleList = (RecyclerView) findViewById(R.id.find_friends_recycle_list);
-        FindFriendRecycleList.setHasFixedSize(true);
-        FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(this));
+                            a = String.valueOf(dsp.getKey());
+                            if(a!=null && a!=" ")
+                                getDataFromID(a);
+
+
+
+
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                }
+        );
+
+        Toast.makeText(FindActivity2.this,a,Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,69 +106,28 @@ public class FindActivity2 extends AppCompatActivity {
 
 
 
-        FirebaseRecyclerOptions<Contacts> options = new FirebaseRecyclerOptions.Builder<Contacts>().setQuery(UserRef,Contacts.class).build();
-        FirebaseRecyclerAdapter<Contacts,FindFriendViewHolder> adapter = new FirebaseRecyclerAdapter<Contacts, FindFriendViewHolder>(options) {
-                    @Override
-                    protected void onBindViewHolder(@NonNull FindFriendViewHolder holder, int position, @NonNull Contacts model) {
-                        getRef(position).addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if(!snapshot.child("checked").exists()){
-                                    holder.userName.setText(""+model.getName());
-                                    holder.userStatus.setText(model.getStatus());
-                                }
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-//                        Toast.makeText(FindActivity2.this,x,Toast.LENGTH_SHORT).show();
+        ArrayList<Integer> images = new ArrayList<Integer>();
 
 
-                        holder.add_button.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-//                                String eiei = getRef(position).child("sex").getKey();
-//                                Toast.makeText(FindActivity2.this,eiei,Toast.LENGTH_SHORT).show();
-                            }
-                        });
+        MyAdapter myAdapter = new MyAdapter(FindActivity2.this,Stranger_List,images);
+        FindFriendRecycleList = findViewById(R.id.find_friends_recycle_list);
+        FindFriendRecycleList.setAdapter(myAdapter);
+        FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(FindActivity2.this));
 
-                    }
-
-                    @NonNull
-                    @Override
-                    public FindFriendViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_display_layout,parent,false);
-                        return  new FindFriendViewHolder(v);
-                    }
-                };
-        adapter.startListening();
-        FindFriendRecycleList.setAdapter(adapter);
     }
 
-//    @Override
-//    protected void onStart() {
-//
-//
-//
-//    }
-    public  static class FindFriendViewHolder extends RecyclerView.ViewHolder{
-        TextView userName,userStatus;
-        Button add_button;
-//        CircleImageView profileImage;
+    private void getDataFromID(String a) {
 
-        public FindFriendViewHolder(@NonNull View itemView) {
-            super(itemView);
-            userName = itemView.findViewById(R.id.textviewid);
-            userStatus = itemView.findViewById(R.id.textviewname);
-            add_button = itemView.findViewById(R.id.add_button);
-//
+            Toast.makeText(FindActivity2.this,a,Toast.LENGTH_SHORT).show();
 
-        }
+
+
+
+
+
     }
 
 
-}
+    }
+
+
