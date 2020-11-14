@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,6 +41,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.myText1.setText(data1.get(position));
         holder.myIm.setImageResource(images.get(position));
+        holder.butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Click!");
+            }
+        }
+        );
     }
 
     @Override
@@ -49,11 +58,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView myText1,myText2;
         ImageView myIm;
+        Button butt;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.textviewid);
             myText2 = itemView.findViewById(R.id.textviewname);
             myIm = itemView.findViewById(R.id.imageView10);
+            butt = itemView.findViewById(R.id.add_button);
         }
     }
 }

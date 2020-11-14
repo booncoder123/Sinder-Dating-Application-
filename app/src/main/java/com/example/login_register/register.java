@@ -57,8 +57,9 @@ public class register extends AppCompatActivity {
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
-                    user.put("Friends","default");
-                    user.put("Strangers","default");
+                    //adding when someone request u
+//                    user.put("Friends","default");
+//                    user.put("Strangers","default");
 
 
                     myRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -77,11 +78,6 @@ public class register extends AppCompatActivity {
                             Log.d("value","OnFailure:  "+ e.toString());
                         }
                     });
-                    initialize_node();
-
-
-
-
 
                 }
                 else{
@@ -92,18 +88,6 @@ public class register extends AppCompatActivity {
             }
         });
 
-    }
-
-    private void initialize_node() {
-        userID = fAuth.getCurrentUser().getUid(); // getting id
-        myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID).child("Friends");
-        Map<String,Object> user2 = new HashMap<>();
-        user2.put("Person1","default");
-        myRef.setValue(user2);
-        myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID).child("Strangers");
-        Map<String,Object> user3 = new HashMap<>();
-        user3.put("Person1","default");
-        myRef.setValue(user3);
     }
 
     @Override
@@ -155,8 +139,6 @@ public class register extends AppCompatActivity {
                 }
                 progressBar.setVisibility(View.VISIBLE);
                 RegisterNow(fullName,email,password,phone);
-
-
 
             }
         });
