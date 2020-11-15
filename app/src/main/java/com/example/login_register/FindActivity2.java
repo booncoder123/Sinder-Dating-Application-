@@ -85,6 +85,7 @@ public class FindActivity2 extends AppCompatActivity {
 
     private void sendToMem(ArrayList<String> stranger_list) {
         ArrayList<String> Stranger_name = new ArrayList<String>();
+        ArrayList<String> Stranger_id = stranger_list;
         for (String id : stranger_list) {
             myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
             myRef.addValueEventListener(new ValueEventListener() {
@@ -92,7 +93,7 @@ public class FindActivity2 extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     Stranger_name.add(snapshot.child(id).child("fName").getValue().toString());
-                    sendToShowOutput(Stranger_name);
+                    sendToShowOutput(Stranger_name,Stranger_id);
                 }
 
                 @Override
@@ -105,14 +106,14 @@ public class FindActivity2 extends AppCompatActivity {
         }
     }
 
-    private void sendToShowOutput(ArrayList<String> stranger_name) {
+    private void sendToShowOutput(ArrayList<String> stranger_name,ArrayList<String> stranger_id) {
         System.out.println(stranger_name);
         ArrayList<Integer> images = new ArrayList<Integer>();
         images.add(R.drawable.ic_account);
         images.add(R.drawable.ic_confirm);
         images.add(R.drawable.ic_email);
 
-        MyAdapter myAdapter = new MyAdapter(FindActivity2.this,stranger_name,images);
+        MyAdapter myAdapter = new MyAdapter(FindActivity2.this,stranger_name,images,stranger_id);
         FindFriendRecycleList = findViewById(R.id.find_friends_recycle_list);
         FindFriendRecycleList.setAdapter(myAdapter);
         FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(FindActivity2.this));
