@@ -122,8 +122,7 @@ public class FindActivity2 extends AppCompatActivity {
 
                 @Override
                 public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    System.out.println("Delete");
-                    recreate();
+                    sendToShowOutput(Stranger_name,Stranger_id);
                 }
 
                 @Override
