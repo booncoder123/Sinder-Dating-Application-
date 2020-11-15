@@ -75,12 +75,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
                 if(!snapshot.child("peopleNode").child(userID).hasChild("friends"))
                 {
                     myRef = myRef.child("peopleNode").child(userID);
                     Map<String,Object> user = new HashMap<>();
                     user.put("friends","default");
                     myRef.updateChildren(user);
+
 
                 }
 
@@ -100,6 +102,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                     //delete node
                     FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers").child(ids.get(position)).removeValue();
                     sendUserTochat();
+
 
 
 

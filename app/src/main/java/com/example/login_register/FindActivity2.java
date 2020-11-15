@@ -1,6 +1,7 @@
 package com.example.login_register;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import com.example.login_register.Model.MyAdapter;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,13 +56,6 @@ public class FindActivity2 extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setTitle("Find Friends");
 
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -71,6 +66,7 @@ public class FindActivity2 extends AppCompatActivity {
                     Stranger_List.add(i.getValue().toString());
                     sendToMem(Stranger_List);
 
+
                 }
             }
 
@@ -80,6 +76,15 @@ public class FindActivity2 extends AppCompatActivity {
             }
 
         });
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
 
     }
 
@@ -101,6 +106,35 @@ public class FindActivity2 extends AppCompatActivity {
 
                 }
 
+
+            });
+            myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers");
+            myRef.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    System.out.println("Delete");
+                    recreate();
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
             });
 
         }
@@ -117,6 +151,7 @@ public class FindActivity2 extends AppCompatActivity {
         FindFriendRecycleList = findViewById(R.id.find_friends_recycle_list);
         FindFriendRecycleList.setAdapter(myAdapter);
         FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(FindActivity2.this));
+
     }
 }
 
