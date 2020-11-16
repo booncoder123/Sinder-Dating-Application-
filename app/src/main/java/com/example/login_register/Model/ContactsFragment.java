@@ -81,6 +81,7 @@ public class ContactsFragment extends Fragment {
         myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         fAuth = FirebaseAuth.getInstance();
+        
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

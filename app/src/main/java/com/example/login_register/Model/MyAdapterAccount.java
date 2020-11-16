@@ -3,6 +3,7 @@ package com.example.login_register.Model;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,6 +57,7 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
         holder.itemView.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                     System.out.println(holder.itemView.getId());
                         Intent intent = new Intent(conText, MessasgeActivity.class);
                         intent.putExtra("userid",data2.get(position));
@@ -63,7 +65,10 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
                     }
 
                 }
+
+
         );
+
 
 
     }
@@ -78,6 +83,7 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView myText1;
+
 //        ImageView myIm;
 
         public MyViewHolder(@NonNull View itemView) {
