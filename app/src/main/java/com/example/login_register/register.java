@@ -57,6 +57,7 @@ public class register extends AppCompatActivity {
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
+                    user.put("userid",userID);
                     //adding when someone request u
 //                    user.put("Friends","default");
 //                    user.put("Strangers","default");

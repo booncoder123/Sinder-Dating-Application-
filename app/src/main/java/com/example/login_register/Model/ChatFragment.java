@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.login_register.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,12 +39,6 @@ public class ChatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private RecyclerView recyclerView;
-    MyAdapterAccount userAdapter;
-    private ArrayList<Users> mUsers;
-    private  ArrayList<String> usersList;
-    FirebaseUser fuser;
-    DatabaseReference reference;
 
 
 
@@ -78,71 +73,19 @@ public class ChatFragment extends Fragment {
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_chat,container,false);
-
-//        recyclerView = view.findViewById(R.id.Recycle_chats);
-//        recyclerView.setHasFixedSize(true);
-//        recyclerView.setLayoutManager(new LinearLayoutManager((getContext())));
-//        fuser = FirebaseAuth.getInstance().getCurrentUser();
+   // @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+////        View view = inflater.inflate(R.layout.fragment_chat,container,false);
+//        View view = inflater.inflate(R.layout.fragment_chat, container, false);
 //
-//        usersList = new ArrayList<>();
-//        reference = FirebaseDatabase.getInstance().getReference("Chats");
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                usersList.clear();
-//                for(DataSnapshot snap : snapshot.getChildren()){
-//                    Chat chat = snap.getValue(Chat.class);
-//                    if(chat.getReciever().equals(fuser.getUid())){
-//                        usersList.add(chat.getReciever());
-//                    }
-//                    if(chat.getReciever().equals(fuser.getUid())){
-//                        usersList.add(chat.getSender());
-//                    }
+////
+
 //
-//                }
-////                readChats();
 //
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+//        return view;
+//    }
 
 
-
-        return view;
-    }
-
-    private void readChats() {
-        mUsers = new ArrayList<>();
-        reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                mUsers.clear();
-                for(DataSnapshot snap : snapshot.getChildren()){
-                    Users user = snapshot.getValue(Users.class);
-
-                    for (String id : usersList){
-
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
 }
