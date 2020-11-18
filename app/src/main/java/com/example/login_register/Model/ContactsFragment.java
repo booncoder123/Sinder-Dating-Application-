@@ -38,8 +38,7 @@ public class ContactsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ArrayList<Integer> pics = new ArrayList<Integer>();
-    ArrayList<String> Names = new ArrayList<String>();
+
     FirebaseAuth fAuth;
     DatabaseReference myRef;
     String userID;
@@ -87,9 +86,9 @@ public class ContactsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<String> Stranger_List = new ArrayList<String>();
                 for (DataSnapshot i : snapshot.child(userID).child("friends").getChildren()) {
-                   System.out.println(i.getValue().toString());
+
                     Stranger_List.add(i.getValue().toString());
-                    System.out.println(i.getValue().toString());
+
                        sendToMem(Stranger_List);
 
                 }
@@ -105,31 +104,36 @@ public class ContactsFragment extends Fragment {
     }
 
     private void sendToMem(ArrayList<String> stranger_list) {
-        ArrayList<String> Stranger_name = new ArrayList<String>();
-        ArrayList<String> Stranger_id = stranger_list;
-        for (String id : stranger_list) {
-            myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+        ArrayList<Users> people = new ArrayList<Users>();
+            for (String person : stranger_list){
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot p : snapshot.getChildren()){
+                            if(p.child("userid").getValue().toString().equals(person)){
+                                Users per = p.getValue(Users.class);
+                                people.add(per);
+                                sendToShowOutput(people);
+                            }
 
-                    Stranger_name.add(snapshot.child(id).child("fName").getValue().toString());
-                    sendToShowOutput(Stranger_name,Stranger_id);
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
 
-                }
+                        }
+                    }
 
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-        }
+                    }
+                });
+            }
+
+
     }
 
-    private void sendToShowOutput(ArrayList<String> stranger_name,ArrayList<String> stranger_id) {
+    private void sendToShowOutput(ArrayList<Users> stranger_people) {
 
-        MyAdapterAccount myAdapter = new MyAdapterAccount(getContext(),stranger_name,stranger_id);
+        MyAdapterAccount myAdapter = new MyAdapterAccount(getContext(),stranger_people);
         myContactList= (RecyclerView) ContactsView.findViewById(R.id.Recycle_contacts);
         myContactList.setAdapter(myAdapter);
         myContactList.setLayoutManager(new LinearLayoutManager(getContext()));

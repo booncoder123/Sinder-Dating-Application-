@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.login_register.R;
-import com.example.login_register.login_new;
+import com.example.login_register.login_new_version1;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -93,7 +93,7 @@ public class GroupsFragment extends Fragment {
 
 //
         recyclerView = view.findViewById(R.id.Recycle_chats);
-         recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager((getContext())));
 
 
@@ -132,7 +132,7 @@ public class GroupsFragment extends Fragment {
 
         return view;
     }
-        private void readChats() {
+    private void readChats() {
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("peopleNode");
         reference.addValueEventListener(new ValueEventListener() {
@@ -140,45 +140,32 @@ public class GroupsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mUsers.clear();
 
-                System.out.println("readchat"+ usersList);
+
                 for (DataSnapshot snap : snapshot.getChildren()) {
                     Users user = snap.getValue(Users.class);
-                    System.out.println(user.getUserid());
                     for (String id : usersList) {
                         if (user.getUserid().equals(id)) {
-                            if (mUsers.size() != 0) {
-                                for (Users user1 : mUsers) {
-                                    if (!user.getUserid().equals(user1.getUserid())) {
-                                        mUsers.add(user);
-                                        System.out.println(mUsers);
-
-                                    }
+                            System.out.println("148:"+" "+mUsers);
+                                if(!mUsers.contains(user)){
+                                    mUsers.add(user);
                                 }
-                            } else {
-
-                                mUsers.add(user);
-                                System.out.println("Lisy" + mUsers);
-
-                            }
-
                         }
-
-
                     }
-                     }
-                System.out.println(mUsers);
+                }
+
+
                 userAdapter = new UserAdapter(getContext(),mUsers);
                 recyclerView.setAdapter(userAdapter);
 
-                      }
+            }
 
-                    @Override
-                    public void onCancelled (@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled (@NonNull DatabaseError error) {
 
 
-                    }
-                    });
+            }
+        });
 
-        }
+    }
 
-        }
+}

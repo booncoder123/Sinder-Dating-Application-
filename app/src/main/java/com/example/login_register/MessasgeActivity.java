@@ -129,7 +129,6 @@ public class MessasgeActivity extends AppCompatActivity {
                     Chat chat = snap.getValue(Chat.class);
                     System.out.println(chat.getMessage());
                     if(chat.getReciever().equals(myid) && chat.getSender().equals(userid) || chat.getReciever().equals(userid) && chat.getSender().equals(myid)){
-                       System.out.println(chat);
                         mchat.add(chat);
                     }
                     //add image here

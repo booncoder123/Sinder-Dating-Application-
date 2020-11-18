@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.login_register.Model.MyAdapter;
+import com.example.login_register.Model.Users;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,6 +41,8 @@ public class FindActivity2 extends AppCompatActivity {
     FirebaseAuth fAuth;
     DatabaseReference myRef, myRef2;
     String userID;
+    ArrayList<String> id_collertor;
+    ArrayList<Users> users_collector;
 
 
     String a;
@@ -49,6 +52,8 @@ public class FindActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find2);
+
+
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         fAuth = FirebaseAuth.getInstance();
 //        myRef  = FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers");
@@ -56,30 +61,66 @@ public class FindActivity2 extends AppCompatActivity {
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setTitle("Find Friends");
 
-        myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
+        myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers");
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<String> Stranger_List = new ArrayList<String>();
-                for (DataSnapshot i : snapshot.child(userID).child("Strangers").getChildren()) {
-//                    System.out.println(i.getValue().toString());
-                    Stranger_List.add(i.getValue().toString());
-                    sendToMem(Stranger_List);
-
-
+                id_collertor = new ArrayList<String>();
+                for( DataSnapshot snap : snapshot.getChildren()){
+                    id_collertor.add(snap.getValue().toString());
                 }
+                SearchIDUsers(id_collertor);
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
 
 
 
+
     }
+
+    private void SearchIDUsers(ArrayList<String> id_collertor) {
+        users_collector = new ArrayList<Users>();
+//        System.out.println(id_collertor);
+        myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               for(String item : id_collertor){
+                   for (DataSnapshot snap : snapshot.getChildren()){
+                       Users person = snap.getValue(Users.class);
+                      if(item.equals(String.valueOf(person.getUserid()))){
+                           users_collector.add(person);
+                      }
+
+                   }
+               }
+//                System.out.println(users_collector);
+                show_output(users_collector);
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
+    private void show_output(ArrayList<Users> users_collector) {
+        MyAdapter myAdapter = new MyAdapter(FindActivity2.this,users_collector);
+        FindFriendRecycleList = findViewById(R.id.find_friends_recycle_list);
+        FindFriendRecycleList.setAdapter(myAdapter);
+        FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(FindActivity2.this));
+    }
+
 
     @Override
     protected void onStart() {
@@ -88,70 +129,9 @@ public class FindActivity2 extends AppCompatActivity {
 
     }
 
-    private void sendToMem(ArrayList<String> stranger_list) {
-        ArrayList<String> Stranger_name = new ArrayList<String>();
-        ArrayList<String> Stranger_id = stranger_list;
-        for (String id : stranger_list) {
-            myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode");
-            myRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    Stranger_name.add(snapshot.child(id).child("fName").getValue().toString());
-                    sendToShowOutput(Stranger_name,Stranger_id);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
 
 
-            });
-            myRef = FirebaseDatabase.getInstance().getReference().child("peopleNode").child(userID).child("Strangers");
-            myRef.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    sendToShowOutput(Stranger_name,Stranger_id);
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-        }
-    }
-
-    private void sendToShowOutput(ArrayList<String> stranger_name,ArrayList<String> stranger_id) {
-        System.out.println(stranger_name);
-        ArrayList<Integer> images = new ArrayList<Integer>();
-        images.add(R.drawable.ic_account);
-        images.add(R.drawable.ic_confirm);
-        images.add(R.drawable.ic_email);
-
-        MyAdapter myAdapter = new MyAdapter(FindActivity2.this,stranger_name,images,stranger_id);
-        FindFriendRecycleList = findViewById(R.id.find_friends_recycle_list);
-        FindFriendRecycleList.setAdapter(myAdapter);
-        FindFriendRecycleList.setLayoutManager(new LinearLayoutManager(FindActivity2.this));
-
-    }
 }
 
 

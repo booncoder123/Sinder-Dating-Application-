@@ -44,7 +44,7 @@ public class logoApp extends AppCompatActivity {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(logoApp.this,MainActivity.class);
+                Intent intent = new Intent(logoApp.this,login_new_version1.class);
                 startActivity(intent);
                 finish();
             }

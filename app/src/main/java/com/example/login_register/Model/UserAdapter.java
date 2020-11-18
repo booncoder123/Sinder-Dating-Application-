@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.login_register.MessasgeActivity;
 import com.example.login_register.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context mContext;
@@ -29,13 +32,13 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView username;
-        public ImageView profile_img;
+        public CircleImageView profile_img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             username = itemView.findViewById(R.id.Name_account);
-//            profile_img = itemView.findViewById(R.id.URL_account);
+            profile_img = itemView.findViewById(R.id.URL_account);
 
         }
     }
@@ -58,13 +61,23 @@ public class UserAdapter  extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             @Override
             public void onClick(View view) {
 
-                System.out.println(holder.itemView.getId());
+
                 Intent intent = new Intent(mContext, MessasgeActivity.class);
                 intent.putExtra("userid",mUsers.get(position).getUserid());
                 mContext.startActivity(intent);
             }
 
         });
+
+
+        if(user.getImageURL().equals("default")){
+            holder.profile_img.setImageResource(R.mipmap.ic_launcher);
+        }
+        else{
+//            Glide.with(conText).load(user.getImageURL()).into(holder.myIm);
+
+            Picasso.get().load(user.getImageURL()).into(holder.profile_img);
+        }
 
 
 

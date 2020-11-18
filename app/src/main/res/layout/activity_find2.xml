@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FindActivity2">
+    tools:context=".FindActivity2"
+    android:background="#fffff1">
 
 
     <androidx.recyclerview.widget.RecyclerView
+
         android:id="@+id/find_friends_recycle_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

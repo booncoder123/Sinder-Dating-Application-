@@ -15,7 +15,7 @@
             android:id="@+id/Toolbar_msg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/design_default_color_primary_dark"
+            android:background="#FBAE94 "
             >
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -29,9 +29,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:layout_marginLeft="25dp"
-                android:textColor="#fff"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                android:layout_marginStart="25dp">
+                android:layout_marginStart="25dp"
+                >
 
             </TextView>
         </androidx.appcompat.widget.Toolbar>
@@ -62,7 +63,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_action_name"></ImageButton>
+            android:background="@drawable/send"></ImageButton>
 
     </RelativeLayout>
 
@@ -74,7 +75,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginBottom="68dp" />
+        android:layout_marginBottom="68dp"
+        android:background="#fffff1"/>
 
 
 </RelativeLayout>

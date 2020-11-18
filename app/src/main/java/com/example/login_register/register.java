@@ -32,7 +32,7 @@ public class register extends AppCompatActivity {
     EditText mFullName,mEmail,mPassword,mPhone;
     Button mRegisterBtn;
     TextView mLoginBtn;
-
+    EditText sex;
     FirebaseAuth fAuth;
     DatabaseReference myRef;
 
@@ -52,12 +52,14 @@ public class register extends AppCompatActivity {
                     userID = fAuth.getCurrentUser().getUid(); // getting id
                     myRef = FirebaseDatabase.getInstance().getReference("peopleNode").child(userID);
 
+
                     Map<String,Object> user = new HashMap<>();
                     user.put("fName",name);
                     user.put("email",email);
                     user.put("phone",phone);
                     user.put("imageURL","default");
                     user.put("userid",userID);
+                    user.put("sex",sex.getText().toString().toLowerCase());
                     //adding when someone request u
 //                    user.put("Friends","default");
 //                    user.put("Strangers","default");
@@ -105,10 +107,11 @@ public class register extends AppCompatActivity {
         mRegisterBtn = findViewById(R.id.login_button);
         mLoginBtn = findViewById(R.id.gologin);
         progressBar = findViewById(R.id.progressBar);
+        sex = findViewById(R.id.Sex);
 
         fAuth = FirebaseAuth.getInstance();
 //        fStore = FirebaseFirestore.getInstance();
-
+        FirebaseAuth.getInstance().signOut();
          //check if it alreadys id there
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class)); //send the user to MainActivity
@@ -146,11 +149,9 @@ public class register extends AppCompatActivity {
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), login_new.class));
+                startActivity(new Intent(getApplicationContext(), login_new_version1.class));
             }
-        });{
-
-        }
+        });
 
     }
 }

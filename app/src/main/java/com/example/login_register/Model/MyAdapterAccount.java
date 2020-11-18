@@ -2,6 +2,7 @@ package com.example.login_register.Model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
@@ -14,27 +15,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.login_register.MessasgeActivity;
 import com.example.login_register.R;
+import com.example.login_register.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyViewHolder> {
-    ArrayList<String> data1;
-    ArrayList<String> data2;
-    ArrayList<Integer> images;
-    ArrayList<String> stranger_id;
+    ArrayList<Users> data1;
     Context conText;
     FirebaseAuth fAuth;
     DatabaseReference myRef;
     String userID;
-    public MyAdapterAccount(Context ct,ArrayList<String> s1,ArrayList<String> s2){
-        conText = ct;
-        //images = img;
+    public MyAdapterAccount(Context ct,ArrayList<Users> s1){
+        conText = ct;;
         data1 = s1;
-        data2 = s2;
+
 
 
     }
@@ -50,17 +52,15 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.myText1.setText(data1.get(position));
-        //holder.myIm.setImageResource(images.get(position));
-//        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         holder.itemView.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
-                    System.out.println(holder.itemView.getId());
                         Intent intent = new Intent(conText, MessasgeActivity.class);
-                        intent.putExtra("userid",data2.get(position));
+                        intent.putExtra("userid",data1.get(position).getUserid());
                         conText.startActivity(intent);
                     }
 
@@ -68,6 +68,16 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
 
 
         );
+        Users user = data1.get(position);
+        holder.myText1.setText(user.getfName());
+        if(user.getImageURL().equals("default")){
+            holder.myIm.setImageResource(R.mipmap.ic_launcher);
+        }
+       else{
+//            Glide.with(conText).load(user.getImageURL()).into(holder.myIm);
+
+            Picasso.get().load(user.getImageURL()).into(holder.myIm);
+        }
 
 
 
@@ -83,15 +93,17 @@ public class MyAdapterAccount extends RecyclerView.Adapter<MyAdapterAccount.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView myText1;
-
-//        ImageView myIm;
+        CircleImageView myIm;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             myText1 = itemView.findViewById(R.id.Name_account);
-            //myIm = itemView.findViewById(R.id.URL_account);
+            myIm = itemView.findViewById(R.id.URL_account);
 
 
         }
     }
+
+
+
 }
