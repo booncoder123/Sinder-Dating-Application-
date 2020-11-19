@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".swipping" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity android:name=".logoApp" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity
             android:name=".login_new_version1"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -25,13 +25,13 @@
             android:name=".SettingsActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".swipping"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".register"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".logoApp"
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

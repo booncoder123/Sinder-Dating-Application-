@@ -8,10 +8,19 @@ public class Users {
     private String imageURL;
     private String phone;
     private String userid;
+    private String sex;
     private HashMap<String, String> friends;
 
     public Users() {
 
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getEmail() {

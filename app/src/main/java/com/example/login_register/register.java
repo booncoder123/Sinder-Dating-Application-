@@ -20,8 +20,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -60,9 +63,12 @@ public class register extends AppCompatActivity {
                     user.put("imageURL","default");
                     user.put("userid",userID);
                     user.put("sex",sex.getText().toString().toLowerCase());
-                    //adding when someone request u
-//                    user.put("Friends","default");
-//                    user.put("Strangers","default");
+
+                    //keeping data to sexnode
+
+
+
+
 
 
                     myRef.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -81,6 +87,7 @@ public class register extends AppCompatActivity {
                             Log.d("value","OnFailure:  "+ e.toString());
                         }
                     });
+                    keeping_data_in_sex_node(userID,sex.getText().toString().toLowerCase());
 
                 }
                 else{
@@ -91,6 +98,26 @@ public class register extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void keeping_data_in_sex_node(String user_id,String type) {
+
+        myRef = FirebaseDatabase.getInstance().getReference("sexNode").child(type);
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Map<String,Object> user2 = new HashMap<>();
+                user2.put(user_id,user_id);
+                myRef.updateChildren(user2);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
