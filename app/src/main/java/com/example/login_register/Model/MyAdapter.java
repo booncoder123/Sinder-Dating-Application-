@@ -20,10 +20,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,6 +36,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     FirebaseAuth fAuth;
     DatabaseReference myRef;
     String userid;
+
 
     public MyAdapter(Context mContext, ArrayList<Users> mUsers) {
         this.mContext = mContext;
@@ -65,6 +68,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         return new MyAdapter.ViewHolder(view);
 
 
+
     }
 
 
@@ -79,8 +83,7 @@ public class MyAdapter  extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             public void onClick(View view) {
 
                 deleteFromStrangers(user,position);
-               MyAdapter.this.notifyDataSetChanged();
-                notifyDataSetChanged();
+
 
             }
         });

@@ -19,6 +19,7 @@ import com.example.login_register.Model.GroupsFragment;
 import com.example.login_register.Model.ItemModel;
 import com.example.login_register.Model.RandomCollection;
 import com.example.login_register.Model.Users;
+import com.example.login_register.Model.request;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -130,6 +131,7 @@ public class swipping extends AppCompatActivity {
 
 
 
+
             }
 
             @Override
@@ -145,13 +147,15 @@ public class swipping extends AppCompatActivity {
                    if(users.get(position).getSex() == "male"){
                        male_point += 0.1;
                        female_point -= 0.1;
-                       refresh();
+
                    }
                    else {
                        male_point -= 0.1;
                        female_point += 0.1;
-                       refresh();
+
                    }
+                   check_in_node(users.get(position).getUserid());
+
 
 
                }
@@ -162,16 +166,19 @@ public class swipping extends AppCompatActivity {
                    if(users.get(position).getSex() == "male"){
                        male_point -= 0.1;
                        female_point += 0.1;
-                       refresh();
+
                    }
                    else {
                        female_point -= 0.1;
                        male_point +=0.1;
-                       refresh();
+
                    }
+
                }
 
-
+               right = true;
+               left = true;
+                refresh();
             }
         });
         manager.setStackFrom(StackFrom.None);
@@ -184,7 +191,11 @@ public class swipping extends AppCompatActivity {
         manager.setCanScrollHorizontal(true);
         manager.setSwipeableMethod(SwipeableMethod.Manual);
         manager.setOverlayInterpolator(new LinearInterpolator());
-        refresh();
+
+
+    }
+
+    private void  check_in_node(String s) {
 
     }
 
@@ -232,13 +243,13 @@ public class swipping extends AppCompatActivity {
     }
 
     private String calculateWhoShow() {
-        RandomCollection<String> a = new RandomCollection<>();
-        a.add(male_point, "male");
-        a.add(female_point, "female");
-        System.out.println(male_point+":"+female_point);
-        System.out.println("P   "+a.next());
-        return  a.next();
-
+//        RandomCollection<String> a = new RandomCollection<>();
+//        a.add(male_point, "male");
+//        a.add(female_point, "female");
+//        System.out.println(male_point+":"+female_point);
+//        System.out.println("P   "+a.next());
+//        return  a.next();
+        return "male";
     }
 
     private List<ItemModel> addList() {
@@ -277,7 +288,7 @@ public class swipping extends AppCompatActivity {
 
     private void showOutObject(ArrayList<Users> users_keeper) {
         users = users_keeper;
-        adapter = new CardStackAdapter(addList(),users);
+        //adapter = new CardStackAdapter(addList(),users);
         cardStackView.setLayoutManager(manager);
         cardStackView.setAdapter(adapter);
         cardStackView.setItemAnimator(new DefaultItemAnimator());

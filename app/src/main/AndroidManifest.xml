@@ -10,8 +10,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".logoApp" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar" >
+        <activity android:name=".swip_2" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".logoApp"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".login_new_version1"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

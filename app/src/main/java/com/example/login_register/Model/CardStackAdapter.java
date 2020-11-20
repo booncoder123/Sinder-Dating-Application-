@@ -30,7 +30,7 @@ public class CardStackAdapter  extends RecyclerView.Adapter<CardStackAdapter.Vie
     private List<ItemModel> items;
     private  ArrayList<Users>users;
 
-    public CardStackAdapter(List<ItemModel> items, ArrayList<Users> users) {
+    public CardStackAdapter( ArrayList<Users> users) {
 
         this.items = items;
         this.users = users;
@@ -40,7 +40,7 @@ public class CardStackAdapter  extends RecyclerView.Adapter<CardStackAdapter.Vie
     @Override
     public CardStackAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_card,parent,false);
+        View view = inflater.inflate(R.layout.item,parent,false);
         return  new ViewHolder(view);
     }
 
@@ -56,13 +56,13 @@ public class CardStackAdapter  extends RecyclerView.Adapter<CardStackAdapter.Vie
 
     class ViewHolder extends  RecyclerView.ViewHolder {
         ImageView image;
-        TextView name,usia,kota;
+        TextView name;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.item_image);
-            name = itemView.findViewById(R.id.item_name);
-            usia = itemView.findViewById(R.id.item_age);
-            kota = itemView.findViewById(R.id.item_city);
+//            image = itemView.findViewById(R.id.pic_person);
+//            name = itemView.findViewById(R.id.name_person);
+//            usia = itemView.findViewById(R.id.item_age);
+//            kota = itemView.findViewById(R.id.item_city);
         }
 
         void setData(Users data) {
@@ -73,8 +73,8 @@ public class CardStackAdapter  extends RecyclerView.Adapter<CardStackAdapter.Vie
                     .into(image);
 
             name.setText(data.getfName());
-            usia.setText(data.getPhone());
-            kota.setText(data.getEmail());
+//            usia.setText(data.getPhone());
+//            kota.setText(data.getEmail());
 
 
         }

@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.login_register.FindActivity2;
 import com.example.login_register.MainActivity;
 import com.example.login_register.R;
+import com.example.login_register.swip_2;
 import com.example.login_register.swipping;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -85,7 +86,7 @@ public class ChatFragment extends Fragment {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent FindActivity = new Intent(getContext(),swipping.class);
+                Intent FindActivity = new Intent(getContext(), swip_2.class);
                 startActivity(FindActivity);
             }
         });

@@ -11,6 +11,15 @@ public class Users {
     private String sex;
     private HashMap<String, String> friends;
 
+    public Users(String email, String fName, String imageURL, String phone, String userid, String sex) {
+        this.email = email;
+        this.fName = fName;
+        this.imageURL = imageURL;
+        this.phone = phone;
+        this.userid = userid;
+        this.sex = sex;
+    }
+
     public Users() {
 
     }
